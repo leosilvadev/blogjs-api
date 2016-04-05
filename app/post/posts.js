@@ -1,8 +1,7 @@
 var Post = require('./modelo');
 
-var listarTodos = function(quandoListar, quandoDerErro){
-    Post.find()
-        .exec(function(err, posts){
+var listarTodos = function(pagina, maximoItems, quandoListar, quandoDerErro){
+    Post.paginate({}, {page: pagina, limit: maximoItems}, function(err, posts){
             if (err) {
                 quandoDerErro(err);
             } else {
@@ -43,9 +42,8 @@ var buscarPorDonoEId = function(id, dono, quandoEncontrar, quandoDerErro){
         });
 }
 
-var listarPorTitulo = function(titulo, quandoListar, quandoDerErro){
-    Post.find({titulo:new RegExp(titulo, "i")})
-        .exec(function(err, posts){
+var listarPorTitulo = function(pagina, maximoItems, titulo, quandoListar, quandoDerErro){
+    Post.paginate({titulo:new RegExp(titulo, "i")}, {page: pagina, limit: maximoItems}, function(err, posts){
             if(err){
                 quandoDerErro(err);
             } else {

@@ -37,9 +37,11 @@ var listarPorUsuario = function(req, res){
 
 var listarTodos = function(req, res){
     var titulo = req.query.titulo;
+    var pagina = req.query.pagina || 1;
+    var maximoItems = req.query.maximoItems || 5;
 
     if (titulo) {
-        posts.listarPorTitulo(titulo, function(resultado){
+        posts.listarPorTitulo(pagina, maximoItems, titulo, function(resultado){
             res.status(200).json(resultado);
 
         }, function(erro){
@@ -47,7 +49,7 @@ var listarTodos = function(req, res){
 
         });
     } else {
-        posts.listarTodos(function(resultado){
+        posts.listarTodos(pagina, maximoItems, function(resultado){
             res.status(200).json(resultado);
 
         }, function(erro){
