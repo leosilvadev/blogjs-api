@@ -12,10 +12,10 @@ var cadastrar = function(req, res){
     });
 }
 
-var buscar = function(req, res){
+var buscarPorDonoEId = function(req, res){
     var usuarioId = req.params.usuarioId;
     var postId = req.params.postId;
-    posts.buscar(postId, usuarioId, function(resultado){
+    posts.buscarPorDonoEId(postId, usuarioId, function(resultado){
         res.status(200).json(resultado);
 
     }, function(erro){
@@ -36,16 +36,28 @@ var listarPorUsuario = function(req, res){
 }
 
 var listarTodos = function(req, res){
-    posts.listarTodos(function(resultado){
-        res.status(200).json(resultado);
+    var titulo = req.query.titulo;
 
-    }, function(erro){
-        res.status(400).json(erro);
+    if (titulo) {
+        posts.listarPorTitulo(titulo, function(resultado){
+            res.status(200).json(resultado);
 
-    });
+        }, function(erro){
+            res.status(400).json(erro);
+
+        });
+    } else {
+        posts.listarTodos(function(resultado){
+            res.status(200).json(resultado);
+
+        }, function(erro){
+            res.status(400).json(erro);
+
+        });
+    }
 }
 
-exports.buscar = buscar;
+exports.buscarPorDonoEId = buscarPorDonoEId;
 exports.cadastrar = cadastrar;
 exports.listarTodos = listarTodos;
 exports.listarPorUsuario = listarPorUsuario;

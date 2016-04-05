@@ -32,7 +32,7 @@ var cadastrar = function(post, quandoSalvar, quandoDerErro){
     });
 }
 
-var buscar = function(id, dono, quandoEncontrar, quandoDerErro){
+var buscarPorDonoEId = function(id, dono, quandoEncontrar, quandoDerErro){
     Post.findOne({_id:id, dono:dono})
         .exec(function(err, post){
             if(err){
@@ -43,7 +43,19 @@ var buscar = function(id, dono, quandoEncontrar, quandoDerErro){
         });
 }
 
-exports.buscar = buscar;
+var listarPorTitulo = function(titulo, quandoListar, quandoDerErro){
+    Post.find({titulo:new RegExp(titulo, "i")})
+        .exec(function(err, posts){
+            if(err){
+                quandoDerErro(err);
+            } else {
+                quandoListar(posts);
+            }
+        });
+}
+
+exports.buscarPorDonoEId = buscarPorDonoEId;
+exports.listarPorTitulo = listarPorTitulo;
 exports.listarTodos = listarTodos;
 exports.listarPorUsuario = listarPorUsuario;
 exports.cadastrar = cadastrar;

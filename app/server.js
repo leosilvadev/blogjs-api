@@ -19,7 +19,7 @@ app.post('/v1/usuarios/auth', usuarioController.autenticar);
 
 app.get('/v1/posts', postController.listarTodos);
 app.get('/v1/usuarios/:usuarioId/posts', postController.listarPorUsuario);
-app.get('/v1/usuarios/:usuarioId/posts/:postId', postController.buscar);
+app.get('/v1/usuarios/:usuarioId/posts/:postId', postController.buscarPorDonoEId);
 app.post('/v1/usuarios/:usuarioId/posts', postController.cadastrar);
 
 app.listen(9000, function(){
