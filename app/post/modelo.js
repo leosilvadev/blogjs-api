@@ -33,10 +33,10 @@ var postSchema = new Schema({
     dono: {
         type: String,
         required: true
-    }
+    },
     comentarios: [comentarioSchema]
 });
 
 var Post = mongoose.model('posts', postSchema);
 
-model.exports = Post;
+module.exports = Post;
