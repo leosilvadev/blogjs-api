@@ -24,6 +24,17 @@ var buscarPorDonoEId = function(req, res){
     });
 }
 
+var buscarPorId = function(req, res){
+    var postId = req.params.postId;
+    posts.buscarPorId(postId, function(resultado){
+        res.status(200).json(resultado);
+
+    }, function(erro){
+        res.status(400).json(erro);
+
+    });
+}
+
 var listarPorUsuario = function(req, res){
     var usuarioId = req.params.usuarioId;
     posts.listarPorUsuario(usuarioId, function(resultado){
@@ -59,7 +70,25 @@ var listarTodos = function(req, res){
     }
 }
 
+var adicionarComentario = function(req, res){
+    var postId = req.params.postId;
+    var comentario = req.body;
+
+    if(comentario && comentario.email && comentario.conteudo){
+        posts.adicionarComentario(postId, comentario, function(post){
+            res.status(200).json(post);
+        }, function(erro){
+            res.status(400).json(erro);
+        });
+    } else {
+        res.status(400).json({mensagem:'Comentario inválido!'});
+    }
+
+}
+
+exports.adicionarComentario = adicionarComentario;
 exports.buscarPorDonoEId = buscarPorDonoEId;
+exports.buscarPorId = buscarPorId;
 exports.cadastrar = cadastrar;
 exports.listarTodos = listarTodos;
 exports.listarPorUsuario = listarPorUsuario;

@@ -42,6 +42,17 @@ var buscarPorDonoEId = function(id, dono, quandoEncontrar, quandoDerErro){
         });
 }
 
+var buscarPorId = function(id, quandoEncontrar, quandoDerErro){
+    Post.findById(id)
+        .exec(function(err, post){
+            if(err){
+                quandoDerErro(err);
+            } else {
+                quandoEncontrar(post);
+            }
+        });
+}
+
 var listarPorTitulo = function(pagina, maximoItems, titulo, quandoListar, quandoDerErro){
     Post.paginate({titulo:new RegExp(titulo, "i")}, {page: pagina, limit: maximoItems}, function(err, posts){
             if(err){
@@ -52,7 +63,28 @@ var listarPorTitulo = function(pagina, maximoItems, titulo, quandoListar, quando
         });
 }
 
+var adicionarComentario = function(postId, comentario, quandoAdicionar, quandoDerErro){
+    Post.findById(postId)
+        .exec(function(err, post){
+            if(err){
+                quandoDerErro(err);
+            } else {
+                post.comentarios.push({usuario:comentario.email, conteudo:comentario.conteudo});
+                post.save(function(erro){
+                    if(erro){
+                        quandoDerErro(erro);
+                    } else {
+                        quandoAdicionar(post);
+                    }
+                });
+
+            }
+        });
+}
+
+exports.adicionarComentario = adicionarComentario; 
 exports.buscarPorDonoEId = buscarPorDonoEId;
+exports.buscarPorId = buscarPorId;
 exports.listarPorTitulo = listarPorTitulo;
 exports.listarTodos = listarTodos;
 exports.listarPorUsuario = listarPorUsuario;
