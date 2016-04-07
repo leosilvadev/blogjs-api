@@ -12,6 +12,20 @@ var cadastrar = function(req, res){
     });
 }
 
+var atualizar = function(req, res){
+    var usuarioId = req.params.usuarioId;
+    var postId = req.params.postId;
+    var post = req.body;
+    post.id = postId;
+    post.dono = usuarioId;
+
+    posts.atualizar(post, function(resultado){
+        res.status(200).json(resultado);
+    }, function(erro){
+        res.status(400).json(erro);
+    });
+}
+
 var buscarPorDonoEId = function(req, res){
     var usuarioId = req.params.usuarioId;
     var postId = req.params.postId;
@@ -90,5 +104,6 @@ exports.adicionarComentario = adicionarComentario;
 exports.buscarPorDonoEId = buscarPorDonoEId;
 exports.buscarPorId = buscarPorId;
 exports.cadastrar = cadastrar;
+exports.atualizar = atualizar;
 exports.listarTodos = listarTodos;
 exports.listarPorUsuario = listarPorUsuario;
