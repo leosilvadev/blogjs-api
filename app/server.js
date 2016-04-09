@@ -4,7 +4,9 @@ var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://leonardo:q1w2e3@ds025379.mlab.com:25379/blogjs');
+var mongodbUrlDefault = 'mongodb://leonardo:q1w2e3@ds025379.mlab.com:25379/blogjs';
+
+mongoose.connect(process.env.MONGOLAB_URI || mongodbUrlDefault);
 
 app.use(bodyParser.json());
 app.use(cors());
