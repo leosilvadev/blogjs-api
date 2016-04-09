@@ -25,6 +25,6 @@ app.get('/v1/usuarios/:usuarioId/posts/:postId', postController.buscarPorDonoEId
 app.post('/v1/usuarios/:usuarioId/posts', postController.cadastrar);
 app.put('/v1/usuarios/:usuarioId/posts/:postId', postController.atualizar);
 
-app.listen(9000, function(){
+app.listen(process.env.PORT || 9000, function(){
   console.log('BlogJS API no ar...');
 });
